@@ -1,10 +1,10 @@
 📚 Ecommerce Book Store
-
+--
 Un magazin online de boardgames și cărți dezvoltat în Spring Boot, care permite utilizatorilor să se înregistreze, să se autentifice, să adauge produse în coș, să finalizeze comenzi și să plătească online.
 Proiectul implementează un backend REST API complet, cu JWT authentication, roluri (ADMIN / CUSTOMER), checkout, plăți și testare automată.
----
+
 🧩 Descriere generală
-__
+--
 EcommerceBookStore este o aplicație web backend care gestionează întregul flux al unui magazin online:
 
 Utilizatorii pot naviga produsele, adăuga articole în coș și plasa comenzi
@@ -14,10 +14,11 @@ Administratorii pot gestiona cărți, autori, categorii și stocuri
 Autentificarea se face prin JWT tokens
 
 Aplicația este complet testată cu JUnit & Mockito
----
-🚀 Funcționalități principale (MVP)
-👤 Utilizatori & Autentificare
 
+🚀 Funcționalități principale (MVP)
+--
+👤 Utilizatori & Autentificare
+--
 Înregistrare utilizatori
 
 Login cu username + parolă
@@ -25,17 +26,17 @@ Login cu username + parolă
 Autentificare prin JWT
 
 Roluri: ADMIN, CUSTOMER
----
-📦 Produse (Books / Boardgames)
 
+📦 Produse (Books / Boardgames)
+--
 CRUD complet pentru produse (admin)
 
 Asociere cu autori și categorii
 
 Stoc și preț
----
-🛒 Coș de cumpărături
 
+🛒 Coș de cumpărături
+--
 Adăugare produs în coș
 
 Modificare cantitate
@@ -43,9 +44,9 @@ Modificare cantitate
 Eliminare produs
 
 Vizualizare coș
----
-🧾 Checkout & Comenzi
 
+🧾 Checkout & Comenzi
+--
 Crearea unei comenzi din coș
 
 Verificare stoc
@@ -53,17 +54,17 @@ Verificare stoc
 Asociere adresă de livrare
 
 Generare Order + OrderItems
----
-💳 Plăți
 
+💳 Plăți
+--
 Creare obiect Payment
 
 Status plată: SUCCESS, FAILED
 
 Asociere cu comanda
----
-🧪 Testare
 
+🧪 Testare
+--
 Unit Tests pentru:
 
 AdminBookService
@@ -77,9 +78,9 @@ OrderService
 Mockito pentru mock-uri
 
 Verificare stoc, erori, cazuri limită
----
-🧱 Arhitectură
 
+🧱 Arhitectură
+--
 Aplicația este construită folosind Spring Boot 3 și o arhitectură în straturi:
 
 Controller → Service → Repository → Database
@@ -92,8 +93,9 @@ Repository	JPA / Hibernate
 Entity	Modelele din DB
 Security	JWT, filtre, autentificare
 Test	JUnit + Mockito
----
+
 🗃️ Entități principale
+--
 Entitate	Descriere
 User	Utilizator (admin sau client)
 Address	Adresă de livrare
@@ -105,25 +107,26 @@ CartItem	Produse din coș
 Order	Comandă
 OrderItem	Produsele din comandă
 Payment	Plata
----
-🔐 Securitate
 
+🔐 Securitate
+--
 Autentificare cu JWT
 
 Filtru JwtAuthenticationFilter
 
 SecurityContext pentru utilizatorul logat
----
-Rute protejate:
 
+Rute protejate:
+--
 Endpoint	Acces
 /api/v1/auth/**	Public
 /api/v1/books	Public
 /api/v1/cart/**	Autentificat
 /api/v1/orders/**	Autentificat
 /api/v1/admin/**	ADMIN only
-🛠️ Tehnologii folosite
 
+🛠️ Tehnologii folosite
+--
 Java 17+
 
 Spring Boot 3
@@ -143,7 +146,7 @@ JUnit 5
 Mockito
 
 Maven
----
-🧑‍💻 Autor
 
+🧑‍💻 Autor
+--
 Proiect realizat ca sistem complet de e-commerce backend cu Spring Boot, JWT și teste unitare.
