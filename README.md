@@ -6,15 +6,15 @@
 
 # 🗄️ Model de Date
 
-* [ ] Minimum **6-7 entități interconectate**
+* [x] Minimum **6-7 entități interconectate**
 
 ### Relații de toate tipurile
 
-* [ ] `@OneToOne` (min. 1 exemplu)
+* [x] `@OneToOne` (min. 1 exemplu)
 
-* [ ] `@OneToMany` / `@ManyToOne` (min. 2 exemple)
+* [x] `@OneToMany` / `@ManyToOne` (min. 2 exemple)
 
-* [ ] `@ManyToMany` (min. 1 exemplu)
+* [x] `@ManyToMany` (min. 1 exemplu)
 
 * [ ] Diagrama **ER** documentată în `README`
 
@@ -47,7 +47,7 @@
 
 * [ ] Configurare pentru minimum **2 baze de date diferite**
 
-  * [ ] Bază pentru dezvoltare (`PostgreSQL` / `MySQL`)
+  * [x] Bază pentru dezvoltare (`PostgreSQL` / `MySQL`)
   * [ ] Bază pentru testare (`H2` in-memory sau separată)
 
 * [ ] Fișiere de configurare separate
@@ -71,9 +71,9 @@ application-test.yml
 
 ## Tehnologii
 
-* [ ] `JUnit 5`
+* [x] `JUnit 5`
 
-* [ ] `Mockito`
+* [x] `Mockito`
 
 * [ ] Test database configuration
 
@@ -95,7 +95,7 @@ application-test.yml
 
 ### Server-side
 
-* [ ] Bean Validation
+* [x] Bean Validation
 
 ```java
 @Valid
@@ -147,14 +147,14 @@ application-test.yml
 
 ## Cerințe minime
 
-* [ ] Autentificare `JDBC`
+* [x] Autentificare `JDBC`
 
-* [ ] Minimum **2 roluri**
+* [x] Minimum **2 roluri**
 
-  * [ ] `USER`
-  * [ ] `ADMIN`
+  * [x] `CUSTOMER`
+  * [x] `ADMIN`
 
-* [ ] Protejarea endpoint-urilor bazată pe rol
+* [x] Protejarea endpoint-urilor bazată pe rol
 
 * [ ] Pagină de login custom
 
@@ -162,7 +162,7 @@ application-test.yml
 
 ## Cerințe pentru punctaj maxim
 
-* [ ] Password encoding (`BCrypt`)
+* [x] Password encoding (`BCrypt`)
 * [ ] Remember me functionality
 * [ ] CSRF protection activă
 
@@ -186,7 +186,7 @@ application-test.yml
 
 ## Comunicare inter-servicii
 
-* [ ] REST (`Feign Client` / `RestTemplate`)
+* [x] REST (`Feign Client` / `RestTemplate`)
 
 * [ ] Message Broker (`RabbitMQ` / `Kafka`)
 
