@@ -1,152 +1,305 @@
-📚 Ecommerce Book Store
---
-Un magazin online de boardgames și cărți dezvoltat în Spring Boot, care permite utilizatorilor să se înregistreze, să se autentifice, să adauge produse în coș, să finalizeze comenzi și să plătească online.
-Proiectul implementează un backend REST API complet, cu JWT authentication, roluri (ADMIN / CUSTOMER), checkout, plăți și testare automată.
+status# 📚 Book-Store
 
-🧩 Descriere generală
---
-EcommerceBookStore este o aplicație web backend care gestionează întregul flux al unui magazin online:
+## ✅ CERINȚE OBLIGATORII — Tracking Progres
 
-Utilizatorii pot naviga produsele, adăuga articole în coș și plasa comenzi
+---
 
-Administratorii pot gestiona cărți, autori, categorii și stocuri
+# 🗄️ Model de Date
 
-Autentificarea se face prin JWT tokens
+* [x] Minimum **6-7 entități interconectate**
 
-Aplicația este complet testată cu JUnit & Mockito
+### Relații de toate tipurile
 
-🚀 Funcționalități principale (MVP)
---
-👤 Utilizatori & Autentificare
---
-Înregistrare utilizatori
+* [x] `@OneToOne` (min. 1 exemplu)
 
-Login cu username + parolă
+* [x] `@OneToMany` / `@ManyToOne` (min. 2 exemple)
 
-Autentificare prin JWT
+* [x] `@ManyToMany` (min. 1 exemplu)
 
-Roluri: ADMIN, CUSTOMER
+* [ ] Diagrama **ER** documentată în `README`
 
-📦 Produse (Books / Boardgames)
---
-CRUD complet pentru produse (admin)
+---
 
-Asociere cu autori și categorii
+# 🔧 Operații CRUD Complete
 
-Stoc și preț
+* [ ] Create pentru toate entitățile
 
-🛒 Coș de cumpărături
---
-Adăugare produs în coș
+* [ ] Read pentru toate entitățile
 
-Modificare cantitate
+* [ ] Update pentru toate entitățile
 
-Eliminare produs
+* [ ] Delete pentru toate entitățile
 
-Vizualizare coș
+* [ ] Repository pattern cu **Spring Data JPA**
 
-🧾 Checkout & Comenzi
---
-Crearea unei comenzi din coș
+* [ ] Service layer cu logică de business
 
-Verificare stoc
+* [ ] Exception handling specific pentru fiecare operație
 
-Asociere adresă de livrare
+---
 
-Generare Order + OrderItems
+# ⚙️ Configurare Multi-Environment
 
-💳 Plăți
---
-Creare obiect Payment
+* [ ] Minimum **2 profiluri Spring**
 
-Status plată: SUCCESS, FAILED
+  * [ ] `dev`
+  * [ ] `test`
 
-Asociere cu comanda
+* [ ] Configurare pentru minimum **2 baze de date diferite**
 
-🧪 Testare
---
-Unit Tests pentru:
+  * [x] Bază pentru dezvoltare (`PostgreSQL` / `MySQL`)
+  * [ ] Bază pentru testare (`H2` in-memory sau separată)
 
-AdminBookService
+* [ ] Fișiere de configurare separate
 
-AuthService
+```yaml
+application-dev.yml
+application-test.yml
+```
 
-CartService
+---
 
-OrderService
+# 🧪 Testing
 
-Mockito pentru mock-uri
+## Unit Tests
 
-Verificare stoc, erori, cazuri limită
+* [ ] Minimum **70% coverage** pentru service layer
 
-🧱 Arhitectură
---
-Aplicația este construită folosind Spring Boot 3 și o arhitectură în straturi:
+## Integration Tests
 
-Controller → Service → Repository → Database
+* [ ] Minimum **3 scenarii end-to-end**
 
-🔹 Layer-e:
-Layer	Rol
-Controller	Expune endpoint-uri REST
-Service	Logica de business
-Repository	JPA / Hibernate
-Entity	Modelele din DB
-Security	JWT, filtre, autentificare
-Test	JUnit + Mockito
+## Tehnologii
 
-🗃️ Entități principale
---
-Entitate	Descriere
-User	Utilizator (admin sau client)
-Address	Adresă de livrare
-Books	Produsul din magazin
-Author	Autorul unei cărți
-Category	Categoria produsului
-Cart	Coș de cumpărături
-CartItem	Produse din coș
-Order	Comandă
-OrderItem	Produsele din comandă
-Payment	Plata
+* [x] `JUnit 5`
 
-🔐 Securitate
---
-Autentificare cu JWT
+* [x] `Mockito`
 
-Filtru JwtAuthenticationFilter
+* [ ] Test database configuration
 
-SecurityContext pentru utilizatorul logat
+---
 
-Rute protejate:
---
-Endpoint	Acces
-/api/v1/auth/**	Public
-/api/v1/books	Public
-/api/v1/cart/**	Autentificat
-/api/v1/orders/**	Autentificat
-/api/v1/admin/**	ADMIN only
+# 🖥️ Views și Validare
 
-🛠️ Tehnologii folosite
---
-Java 17+
+## Frontend
 
-Spring Boot 3
+* [ ] `Thymeleaf`
+* [ ] `JSP`
+* [ ] Framework modern (`React` / `Vue` / `Angular`)
 
-Spring Security
+## Formulare
 
-JWT (jjwt)
+* [ ] Formulare pentru toate operațiile **CRUD**
 
-Hibernate / JPA
+## Validare
 
-MySQL / PostgreSQL
+### Server-side
 
-Lombok
+* [x] Bean Validation
 
-JUnit 5
+```java
+@Valid
+@NotNull
+```
 
-Mockito
+### Client-side
 
-Maven
+* [ ] Client-side validation
+* [ ] Mesaje de eroare user-friendly
 
-🧑‍💻 Autor
---
-Proiect realizat ca sistem complet de e-commerce backend cu Spring Boot, JWT și teste unitare.
+## Exception Handling
+
+* [ ] Pagină de eroare `404`
+* [ ] Pagină de eroare `500`
+* [ ] Alte pagini de eroare custom
+
+---
+
+# 📝 Logging
+
+* [ ] Framework configurat (`SLF4J`)
+* [ ] `Logback` sau `Log4j2`
+
+## Nivele de logging
+
+* [ ] `INFO`
+
+* [ ] `DEBUG`
+
+* [ ] `ERROR`
+
+* [ ] Logging în fișiere separate pentru erori
+
+* [ ] Aspecte pentru logging automat (opțional)
+
+---
+
+# 📄 Paginare și Sortare
+
+* [ ] Implementare `Pageable` pentru minimum **3 entități**
+* [ ] Sortare după minimum **2 criterii per entitate**
+* [ ] UI pentru navigare între pagini
+* [ ] Configurare dimensiune pagină
+
+---
+
+# 🔐 Spring Security
+
+## Cerințe minime
+
+* [x] Autentificare `JDBC`
+
+* [x] Minimum **2 roluri**
+
+  * [x] `CUSTOMER`
+  * [x] `ADMIN`
+
+* [x] Protejarea endpoint-urilor bazată pe rol
+
+* [ ] Pagină de login custom
+
+* [ ] Logout funcțional
+
+## Cerințe pentru punctaj maxim
+
+* [x] Password encoding (`BCrypt`)
+* [ ] Remember me functionality
+* [ ] CSRF protection activă
+
+---
+
+# 🧩 CERINȚE OPȚIONALE — Microservicii
+
+---
+
+# 🛠️ Configurare Centralizată
+
+* [ ] Config Server pentru toate microserviciile
+* [ ] Externalizarea configurațiilor sensibile
+* [ ] Refresh dinamic fără restart+-+
+
+---
+
+# 🔎 Service Discovery și Comunicare
+
+* [ ] Service registry funcțional
+
+## Comunicare inter-servicii
+
+* [x] REST (`Feign Client` / `RestTemplate`)
+
+* [ ] Message Broker (`RabbitMQ` / `Kafka`)
+
+* [ ] Demonstrare descoperire automată a serviciilor
+
+---
+
+# ⚖️ Load Balancing și Scalabilitate
+
+* [ ] Client-side load balancing (`Spring Cloud LoadBalancer`)
+* [ ] Rulare multiplă instanță pentru un serviciu
+* [ ] Testing cu minim **2 instanțe per serviciu**
+
+---
+
+# 🚪 API Gateway
+
+* [ ] Routing centralizat
+* [ ] Rate limiting
+* [ ] Request/Response filtering
+
+---
+
+# 📊 Monitorizare și Metrici
+
+* [ ] `Actuator` endpoints expuse
+
+## Dashboard metrici
+
+* [ ] CPU
+
+* [ ] Memory
+
+* [ ] Requests
+
+* [ ] Health checks pentru toate serviciile
+
+* [ ] Distributed tracing (`Zipkin` / `Jaeger` — bonus)
+
+---
+
+# 🔒 Securitate Distribuită
+
+* [ ] JWT authentication între microservicii
+* [ ] `OAuth2` / `Keycloak`
+* [ ] Secure communication (`HTTPS` — bonus)
+
+---
+
+# 🧯 Resilience și Fault Tolerance
+
+* [ ] Circuit Breaker pentru minimum **2 servicii**
+* [ ] Retry mechanism
+* [ ] Fallback methods
+* [ ] Demonstrare comportament în caz de eroare
+
+---
+
+# 🧠 Design Patterns
+
+* [ ] Implementare și documentare minimum **1 pattern**
+
+---
+
+# 🗃️ NoSQL și Caching
+
+## NoSQL
+
+* [ ] Integrare bază NoSQL
+
+  * [ ] `MongoDB`
+  * [ ] `Redis`
+  * [ ] `Cassandra`
+
+## Caching
+
+* [ ] Caching layer (`Redis` / `Hazelcast`)
+* [ ] Demonstrare beneficii de performanță
+
+---
+
+# 🧩 Micro-frontends
+
+* [ ] Separarea frontend-ului în module independente
+
+## Tehnologii
+
+* [ ] Module Federation
+* [ ] Single-SPA
+
+---
+
+# 🚀 CI/CD Pipeline
+
+* [ ] Build automatizat
+* [ ] Rulare teste automate
+* [ ] Deployment automat (`staging`)
+* [ ] Docker containerization
+
+---
+
+# 🤖 AI Agents — Dezvoltare
+
+* [ ] GitHub Copilot pentru pair programming
+* [ ] Code review automatizat
+* [ ] Documentație generată automat
+
+---
+
+# 🤖 AI Agents — Runtime
+
+* [ ] Recomandări personalizate
+
+---
+
+

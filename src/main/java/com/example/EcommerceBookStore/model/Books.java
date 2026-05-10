@@ -1,11 +1,14 @@
 package com.example.EcommerceBookStore.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,13 +32,25 @@ public class Books {
     private int stock;
 
     private String description;
-    @JsonBackReference
-    @JoinTable(name = "books_categories")
+
+    private String imageUrl;
     @ManyToMany
-    private List<Author> authors;
+    @JsonIgnore
+    @JoinTable(
+            name = "books_authors",
+            joinColumns = @JoinColumn(name = "books_id"),
+            inverseJoinColumns = @JoinColumn(name = "authors_id")
+    )
+    private List<Author> authors = new ArrayList<>();
 
     @ManyToMany
-    private List<Category> categories;
+    @JsonIgnore
+    @JoinTable(
+            name = "books_categories",
+            joinColumns = @JoinColumn(name = "books_id"),
+            inverseJoinColumns = @JoinColumn(name = "categories_id")
+    )
+    private List<Category> categories = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -99,5 +114,13 @@ public class Books {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

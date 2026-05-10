@@ -32,7 +32,7 @@ public class OrderService {
         this.cartItemRepository = cartItemRepository;
         this.userRepository = userRepository;
     }
-    private User getCurrentUser() {
+    public User getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -54,8 +54,8 @@ public class OrderService {
 
         // 2️⃣ creează comanda
         Order order = new Order();
-        User user = new User();
-        user.setId(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         order.setUser(user);
         order.setStatus(OrderStatus.PLACED);
         order.setShippingAddress(address);
@@ -96,9 +96,7 @@ public class OrderService {
         paymentRepository.save(payment);
 
         // 5️⃣ golește coșul
-        for (CartItem item : cart.getItems()) {
-            cartItemRepository.delete(item);
-        }
+        cart.getItems().clear();
 
         return order;
     }

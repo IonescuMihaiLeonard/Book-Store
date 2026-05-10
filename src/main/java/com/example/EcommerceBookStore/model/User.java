@@ -34,9 +34,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Address> addresses = new ArrayList<>();
+    @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
@@ -94,5 +98,12 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }

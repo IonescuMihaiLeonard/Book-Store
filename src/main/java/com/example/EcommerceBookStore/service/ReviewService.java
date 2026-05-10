@@ -28,7 +28,7 @@ public class ReviewService {
     // Adaugă review pentru o carte
     public Review addReview(Long userId, Long bookId, int rating, String comment) {
 
-        // 1️⃣ Verifică dacă userul a cumpărat cartea
+        // Verifică dacă userul a cumpărat cartea
         boolean purchased = orderRepository.findByUserId(userId).stream()
                 .flatMap(order -> order.getItems().stream())
                 .anyMatch(item -> item.getBook().getId().equals(bookId));
@@ -37,7 +37,7 @@ public class ReviewService {
             throw new RuntimeException("User must purchase the book before leaving a review");
         }
 
-        // 2️⃣ Creează review-ul
+        // Creează review-ul
         Books book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 

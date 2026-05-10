@@ -1,5 +1,7 @@
 package com.example.EcommerceBookStore.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -7,6 +9,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 
 import com.example.EcommerceBookStore.model.Books;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +24,8 @@ public class Category {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private List<Books> books;
+    @JsonIgnore
+    private List<Books> books = new ArrayList<>();
 
     public Long getId() {
         return id;

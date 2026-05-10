@@ -1,10 +1,14 @@
 package com.example.EcommerceBookStore.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import com.example.EcommerceBookStore.model.Books;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,9 +22,8 @@ public class Author {
     private String name;
 
     @ManyToMany(mappedBy = "authors")
-    @JoinTable(name = "books_authors")
-    @JsonManagedReference
-    private List<Books> books;
+    @JsonIgnore
+    private List<Books> books = new ArrayList<>();
 
     public Long getId() {
         return id;

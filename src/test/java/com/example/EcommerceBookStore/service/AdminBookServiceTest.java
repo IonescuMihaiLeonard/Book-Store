@@ -1,5 +1,6 @@
 package com.example.EcommerceBookStore.service;
 
+import com.example.EcommerceBookStore.dto.BookDto;
 import com.example.EcommerceBookStore.model.Books;
 import com.example.EcommerceBookStore.model.repositoriy.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,9 +35,13 @@ class AdminBookServiceTest {
 
     @Test
     void testCreateBook() {
+        BookDto bookDto = new BookDto();
+
         when(bookRepository.save(any(Books.class))).thenReturn(book);
 
-        Books result = service.create(book);
+        Books result = service.create(bookDto);
+
+        assertNotNull(result);
         assertEquals("Clean Code", result.getTitle());
     }
 

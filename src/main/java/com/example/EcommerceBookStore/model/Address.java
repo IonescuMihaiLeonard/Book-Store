@@ -1,6 +1,7 @@
 package com.example.EcommerceBookStore.model;
 
 import com.example.EcommerceBookStore.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -24,6 +25,7 @@ public class Address {
     private String zipCode;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public Long getId() {

@@ -87,6 +87,7 @@ public class CartService {
         CartItem item = cartItemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found"));
 
+        System.out.println("Found item: " + item.getId() + ", cart: " + (item.getCart() != null ? item.getCart().getId() : "null"));
         Cart cart = item.getCart();
         cartItemRepository.delete(item);
         return cart;

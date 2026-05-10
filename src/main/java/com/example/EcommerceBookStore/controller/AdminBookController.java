@@ -1,8 +1,10 @@
 package com.example.EcommerceBookStore.controller;
 
 
+import com.example.EcommerceBookStore.dto.BookDto;
 import com.example.EcommerceBookStore.model.Books;
 import com.example.EcommerceBookStore.service.AdminBookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +20,10 @@ public class AdminBookController {
     }
 
     @PostMapping
-    public Books create(@RequestBody Books book) {
-        return service.create(book);
+    public ResponseEntity<Books> createBook(
+            @RequestBody BookDto request
+    ) {
+        return ResponseEntity.ok(service.create(request));
     }
 
     @PutMapping("/{id}")
