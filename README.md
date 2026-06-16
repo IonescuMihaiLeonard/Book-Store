@@ -22,17 +22,17 @@ status# 📚 Book-Store
 
 # 🔧 Operații CRUD Complete
 
-* [ ] Create pentru toate entitățile
+* [X] Create pentru toate entitățile
 
-* [ ] Read pentru toate entitățile
+* [X] Read pentru toate entitățile
 
-* [ ] Update pentru toate entitățile
+* [X] Update pentru toate entitățile
 
-* [ ] Delete pentru toate entitățile
+* [X] Delete pentru toate entitățile
 
 * [ ] Repository pattern cu **Spring Data JPA**
 
-* [ ] Service layer cu logică de business
+* [X] Service layer cu logică de business
 
 * [ ] Exception handling specific pentru fiecare operație
 
@@ -42,7 +42,7 @@ status# 📚 Book-Store
 
 * [ ] Minimum **2 profiluri Spring**
 
-  * [ ] `dev`
+  * [X] `dev`
   * [ ] `test`
 
 * [ ] Configurare pentru minimum **2 baze de date diferite**
@@ -63,7 +63,7 @@ application-test.yml
 
 ## Unit Tests
 
-* [ ] Minimum **70% coverage** pentru service layer
+* [X] Minimum **70% coverage** pentru service layer
 
 ## Integration Tests
 
@@ -83,13 +83,11 @@ application-test.yml
 
 ## Frontend
 
-* [ ] `Thymeleaf`
-* [ ] `JSP`
-* [ ] Framework modern (`React` / `Vue` / `Angular`)
+* [X] Framework modern (`React` / `Vue` / `Angular`)
 
 ## Formulare
 
-* [ ] Formulare pentru toate operațiile **CRUD**
+* [X] Formulare pentru toate operațiile **CRUD**
 
 ## Validare
 
@@ -104,14 +102,14 @@ application-test.yml
 
 ### Client-side
 
-* [ ] Client-side validation
-* [ ] Mesaje de eroare user-friendly
+* [X] Client-side validation
+* [X] Mesaje de eroare user-friendly
 
 ## Exception Handling
 
-* [ ] Pagină de eroare `404`
-* [ ] Pagină de eroare `500`
-* [ ] Alte pagini de eroare custom
+* [X] Pagină de eroare `404`
+* [X] Pagină de eroare `500`
+* [X] Alte pagini de eroare custom
 
 ---
 
@@ -138,8 +136,8 @@ application-test.yml
 
 * [ ] Implementare `Pageable` pentru minimum **3 entități**
 * [ ] Sortare după minimum **2 criterii per entitate**
-* [ ] UI pentru navigare între pagini
-* [ ] Configurare dimensiune pagină
+* [X] UI pentru navigare între pagini
+* [X] Configurare dimensiune pagină (Responsive Design)
 
 ---
 
@@ -156,9 +154,9 @@ application-test.yml
 
 * [x] Protejarea endpoint-urilor bazată pe rol
 
-* [ ] Pagină de login custom
+* [X] Pagină de login custom
 
-* [ ] Logout funcțional
+* [X] Logout funcțional
 
 ## Cerințe pentru punctaj maxim
 
@@ -204,7 +202,7 @@ application-test.yml
 
 # 🚪 API Gateway
 
-* [ ] Routing centralizat
+* [X] Routing centralizat
 * [ ] Rate limiting
 * [ ] Request/Response filtering
 
@@ -230,7 +228,7 @@ application-test.yml
 
 # 🔒 Securitate Distribuită
 
-* [ ] JWT authentication între microservicii
+* [X] JWT authentication între microservicii
 * [ ] `OAuth2` / `Keycloak`
 * [ ] Secure communication (`HTTPS` — bonus)
 
