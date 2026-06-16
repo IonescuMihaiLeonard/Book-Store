@@ -84,7 +84,7 @@ class AuthServiceTest {
 
         when(userRepository.findByUsername("ion_popescu")).thenReturn(Optional.of(testUser));
         when(passwordEncoder.matches("parola123", "hashed123")).thenReturn(true);
-        when(jwtUtil.generateToken(testUser.getUsername())).thenReturn("mocked-jwt-token"); // <-- aici
+        when(jwtUtil.generateToken(testUser.getUsername(), String.valueOf(testUser.getRole()))).thenReturn("mocked-jwt-token"); // <-- aici
 
         String token = authService.login("ion_popescu", "parola123");
 
