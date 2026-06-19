@@ -1,6 +1,7 @@
 package com.bookstore.auth.service;
 
 import com.bookstore.auth.config.JwtUtil;
+import com.bookstore.auth.dto.AdminUserRequest;
 import com.bookstore.auth.dto.AuthResponse;
 import com.bookstore.auth.dto.RegisterRequest;
 import com.bookstore.auth.dto.UserResponse;
@@ -63,6 +64,60 @@ public class AuthService {
         return userRepository.findAll().stream()
                 .map(this::toResponse)
                 .toList();
+    }
+
+    public UserResponse getUser(Long id) {
+        return userRepository.findById(id)
+                .map(this::toResponse)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    public UserResponse createUser(AdminUserRequest request) {
+        if (userRepository.existsByUsername(request.username())) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+        if (request.password() == null || request.password().isBlank()) {
+            throw new IllegalArgumentException("Password is required");
+        }
+
+        User user = new User();
+        user.setUsername(request.username());
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password()));
+        user.setRole(request.role());
+        return toResponse(userRepository.save(user));
+    }
+
+    public UserResponse updateUser(Long id, AdminUserRequest request) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        userRepository.findByUsername(request.username())
+                .filter(existing -> !existing.getId().equals(id))
+                .ifPresent(existing -> {
+                    throw new IllegalArgumentException("Username already exists");
+                });
+        if (!user.getEmail().equals(request.email()) && userRepository.existsByEmail(request.email())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+        user.setUsername(request.username());
+        user.setEmail(request.email());
+        if (request.password() != null && !request.password().isBlank()) {
+            user.setPassword(passwordEncoder.encode(request.password()));
+        }
+        user.setRole(request.role());
+        return toResponse(userRepository.save(user));
+    }
+
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("User not found");
+        }
+        userRepository.deleteById(id);
     }
 
     private UserResponse toResponse(User user) {

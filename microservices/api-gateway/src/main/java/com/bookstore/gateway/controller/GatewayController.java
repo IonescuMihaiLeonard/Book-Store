@@ -99,9 +99,17 @@ public class GatewayController {
         if (path.startsWith("/api/v1/admin/orders")) {
             return orderServiceUrl;
         }
+        if (path.startsWith("/api/v1/admin/addresses")
+                || path.startsWith("/api/v1/admin/carts")
+                || path.startsWith("/api/v1/admin/cart-items")
+                || path.startsWith("/api/v1/admin/order-items")
+                || path.startsWith("/api/v1/admin/payments")) {
+            return orderServiceUrl;
+        }
         if (path.startsWith("/api/v1/admin/books")
                 || path.startsWith("/api/v1/admin/authors")
-                || path.startsWith("/api/v1/admin/categories")) {
+                || path.startsWith("/api/v1/admin/categories")
+                || path.startsWith("/api/v1/admin/reviews")) {
             return catalogServiceUrl;
         }
         if (path.startsWith("/api/v1/cart")

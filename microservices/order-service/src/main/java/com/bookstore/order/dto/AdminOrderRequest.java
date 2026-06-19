@@ -1,0 +1,11 @@
+package com.bookstore.order.dto;
+
+import com.bookstore.order.model.OrderStatus;
+import jakarta.validation.constraints.NotNull;
+
+public record AdminOrderRequest(
+        @NotNull Long userId,
+        @NotNull Long addressId,
+        @NotNull OrderStatus status
+) {
+}

@@ -317,6 +317,10 @@ Auth:
 - `GET /api/v1/auth/validate?token=...`
 - `GET /api/v1/auth/me`
 - `GET /api/v1/admin/users`
+- `GET /api/v1/admin/users/{id}`
+- `POST /api/v1/admin/users`
+- `PUT /api/v1/admin/users/{id}`
+- `DELETE /api/v1/admin/users/{id}`
 
 Catalog:
 
@@ -336,6 +340,11 @@ Catalog:
 - `DELETE /api/v1/admin/categories/{id}`
 - `GET /api/v1/books/{bookId}/reviews`
 - `POST /api/v1/books/{bookId}/reviews`
+- `GET /api/v1/admin/reviews`
+- `GET /api/v1/admin/reviews/{id}`
+- `POST /api/v1/admin/reviews`
+- `PUT /api/v1/admin/reviews/{id}`
+- `DELETE /api/v1/admin/reviews/{id}`
 
 Orders:
 
@@ -351,7 +360,36 @@ Orders:
 - `POST /api/v1/orders/checkout`
 - `GET /api/v1/orders`
 - `GET /api/v1/admin/orders`
+- `GET /api/v1/admin/orders/{id}`
+- `POST /api/v1/admin/orders`
+- `PUT /api/v1/admin/orders/{id}`
 - `PUT /api/v1/admin/orders/{id}/status`
+- `DELETE /api/v1/admin/orders/{id}`
+- `GET /api/v1/admin/addresses`
+- `GET /api/v1/admin/addresses/{id}`
+- `POST /api/v1/admin/addresses`
+- `PUT /api/v1/admin/addresses/{id}`
+- `DELETE /api/v1/admin/addresses/{id}`
+- `GET /api/v1/admin/carts`
+- `GET /api/v1/admin/carts/{id}`
+- `POST /api/v1/admin/carts`
+- `PUT /api/v1/admin/carts/{id}`
+- `DELETE /api/v1/admin/carts/{id}`
+- `GET /api/v1/admin/cart-items`
+- `GET /api/v1/admin/cart-items/{id}`
+- `POST /api/v1/admin/cart-items`
+- `PUT /api/v1/admin/cart-items/{id}`
+- `DELETE /api/v1/admin/cart-items/{id}`
+- `GET /api/v1/admin/order-items`
+- `GET /api/v1/admin/order-items/{id}`
+- `POST /api/v1/admin/order-items`
+- `PUT /api/v1/admin/order-items/{id}`
+- `DELETE /api/v1/admin/order-items/{id}`
+- `GET /api/v1/admin/payments`
+- `GET /api/v1/admin/payments/{id}`
+- `POST /api/v1/admin/payments`
+- `PUT /api/v1/admin/payments/{id}`
+- `DELETE /api/v1/admin/payments/{id}`
 
 ## Rutare in API Gateway
 
@@ -359,9 +397,15 @@ Orders:
 - `/api/v1/books/**` -> `catalog-service`
 - `/api/v1/admin/users` -> `auth-service`
 - `/api/v1/admin/orders/**` -> `order-service`
+- `/api/v1/admin/addresses/**` -> `order-service`
+- `/api/v1/admin/carts/**` -> `order-service`
+- `/api/v1/admin/cart-items/**` -> `order-service`
+- `/api/v1/admin/order-items/**` -> `order-service`
+- `/api/v1/admin/payments/**` -> `order-service`
 - `/api/v1/admin/books/**` -> `catalog-service`
 - `/api/v1/admin/authors/**` -> `catalog-service`
 - `/api/v1/admin/categories/**` -> `catalog-service`
+- `/api/v1/admin/reviews/**` -> `catalog-service`
 - `/api/v1/address/**` -> `order-service`
 - `/api/v1/cart/**` -> `order-service`
 - `/api/v1/orders/**` -> `order-service`
@@ -392,7 +436,7 @@ Au fost testate urmatoarele fluxuri:
 | Model de date cu minimum 6-7 entitati | Facut |
 | Relatii `@OneToOne`, `@OneToMany/@ManyToOne`, `@ManyToMany` | Facut |
 | Diagrama ERD in README | Facut |
-| CRUD cu Spring Data JPA si service layer | Partial spre facut |
+| CRUD cu Spring Data JPA si service layer | Facut |
 | Multi-environment dev/test | Nefacut |
 | Testing unit/integration | Nefacut |
 | Views si validare | Partial spre facut |
