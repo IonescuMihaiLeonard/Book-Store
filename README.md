@@ -1,9 +1,5 @@
 # Book Store
 
-Aplicatie web pentru administrarea si vanzarea de carti, migrata de la o arhitectura monolitica la o arhitectura bazata pe microservicii.
-
-Documentatia proiectului este pastrata intr-un singur loc: acest fisier `README.md`.
-
 ## Repository-uri
 
 - Backend / microservicii: `IonescuMihaiLeonard/Book-Store`
@@ -256,8 +252,6 @@ microservices/
   order-service/
   api-gateway/
   pom.xml
-start-dev.cmd
-stop-dev.cmd
 ```
 
 ## Structura Frontend
@@ -279,34 +273,6 @@ Configurarea API in frontend:
 
 - `VITE_API_BASE_URL=/api/v1`
 - Vite proxy trimite `/api` catre `http://host.docker.internal:8085`
-
-## Pornire Locala
-
-Prerequisites:
-
-- Docker Desktop pornit
-- porturile `5173`, `8081`, `8082`, `8083`, `8085`, `13306` libere
-
-Pornire completa:
-
-```powershell
-.\start-dev.cmd
-```
-
-Oprire:
-
-```powershell
-.\stop-dev.cmd
-```
-
-URL-uri locale:
-
-- Frontend: `http://localhost:5173`
-- API Gateway: `http://localhost:8085`
-- Auth service: `http://localhost:8081`
-- Catalog service: `http://localhost:8082`
-- Order service: `http://localhost:8083`
-- MySQL: `localhost:13306`
 
 ## Endpoint-uri Principale
 
@@ -409,41 +375,3 @@ Orders:
 - `/api/v1/address/**` -> `order-service`
 - `/api/v1/cart/**` -> `order-service`
 - `/api/v1/orders/**` -> `order-service`
-
-## Verificari Efectuate
-
-Au fost testate urmatoarele fluxuri:
-
-- pornire containere Docker
-- health checks pentru servicii
-- build frontend
-- register/login user normal
-- login admin
-- listare carti prin gateway
-- adaugare si modificare cart
-- creare adresa
-- checkout comanda
-- golire cos dupa checkout
-- listare comenzi
-- acces admin pentru carti/autori/categorii/useri/comenzi
-- update status comanda
-- blocare acces admin pentru user normal cu `403`
-
-## Cerinte Obligatorii - Stadiu Curent
-
-| Cerinta | Status |
-| --- | --- |
-| Model de date cu minimum 6-7 entitati | Facut |
-| Relatii `@OneToOne`, `@OneToMany/@ManyToOne`, `@ManyToMany` | Facut |
-| Diagrama ERD in README | Facut |
-| CRUD cu Spring Data JPA si service layer | Facut |
-| Multi-environment dev/test | Nefacut |
-| Testing unit/integration | Nefacut |
-| Views si validare | Partial spre facut |
-| Logging configurat | Nefacut |
-| Paginare si sortare | Nefacut |
-| Spring Security | Partial spre facut |
-
-## Observatii
-
-Monolitul initial a fost eliminat din repository-ul backend. Functionalitatea principala ruleaza prin microservicii si frontend-ul comunica exclusiv cu API Gateway-ul.
