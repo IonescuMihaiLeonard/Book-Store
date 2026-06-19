@@ -1,5 +1,7 @@
 # Book Store
 
+Am realizat o aplicatie web pentru administrarea unei librarii online. Proiectul este impartit in microservicii pentru autentificare, catalog, comenzi si rutare prin API Gateway, iar interfata este facuta separat in React.
+
 ## Repository-uri
 
 - Backend / microservicii: `IonescuMihaiLeonard/Book-Store`
@@ -30,7 +32,7 @@ Frontend:
 
 ## Arhitectura
 
-Aplicatia este impartita in trei microservicii de business si un API Gateway:
+Am impartit aplicatia in trei microservicii de business si un API Gateway:
 
 | Componenta | Port local | Responsabilitate |
 | --- | ---: | --- |
@@ -55,7 +57,7 @@ flowchart LR
     OrderDB --> MySQL
 ```
 
-Frontend-ul foloseste proxy-ul Vite pentru `/api/v1`, iar cererile ajung in `api-gateway`. Gateway-ul trimite mai departe cererile catre serviciul potrivit si verifica accesul la rutele de admin.
+In frontend folosesc proxy-ul Vite pentru `/api/v1`, iar cererile ajung in `api-gateway`. Gateway-ul trimite mai departe cererile catre serviciul potrivit si verifica accesul la rutele de admin.
 
 ## Baze de Date
 
@@ -65,7 +67,7 @@ Fiecare microserviciu are baza lui:
 - `catalog_service`: carti, autori, categorii si review-uri
 - `order_service`: cosuri, adrese, comenzi, item-uri de comanda si plati
 
-Relatiile directe JPA sunt definite in interiorul fiecarui microserviciu. Relatiile dintre servicii sunt pastrate prin identificatori logici, de exemplu `userId` si `bookId`, pentru a evita foreign key-uri intre baze de date diferite.
+Am definit relatiile JPA directe in interiorul fiecarui microserviciu. Relatiile dintre servicii sunt pastrate prin identificatori logici, de exemplu `userId` si `bookId`, pentru a evita foreign key-uri intre baze de date diferite.
 
 ## Diagrama ERD
 
@@ -256,7 +258,7 @@ microservices/
 
 ## Structura Frontend
 
-Frontend-ul este in repository separat, dar face parte din aceeasi aplicatie.
+Am pus frontend-ul intr-un repository separat, dar el face parte din aceeasi aplicatie.
 
 ```text
 Book-Store-FrontEnd/
