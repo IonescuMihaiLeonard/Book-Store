@@ -1,5 +1,11 @@
 HELP.md
 target/
+**/target/
+frontend/
+tmp/
+node_modules/
+dist/
+*.log
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -33,4 +39,3 @@ build/
 .vscode/
 
 application.properties
-pom.xml
