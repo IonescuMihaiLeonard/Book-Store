@@ -3,6 +3,8 @@ package com.bookstore.catalog.service;
 import com.bookstore.catalog.model.Author;
 import com.bookstore.catalog.repository.AuthorRepository;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +18,10 @@ public class AuthorService {
 
     public List<Author> getAll() {
         return authorRepository.findAll();
+    }
+
+    public Page<Author> getAll(Pageable pageable) {
+        return authorRepository.findAll(pageable);
     }
 
     public Author create(Author author) {

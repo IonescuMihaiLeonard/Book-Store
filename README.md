@@ -30,6 +30,85 @@ Frontend:
 - JWT decode
 - CSS modular pe pagini/componente
 
+## Configurare Multi-Environment
+
+Am configurat aplicatia cu doua profile Spring:
+
+- `dev`: profilul folosit la rularea locala, cu MySQL
+- `test`: profilul folosit la teste, cu H2 in-memory
+
+In fiecare microserviciu, fisierul `application.yml` pastreaza setarile comune si seteaza profilul implicit:
+
+```yaml
+spring:
+  profiles:
+    default: dev
+```
+
+Configurarea pentru baza de date este separata pe medii:
+
+- `application-dev.yml`: conexiune la MySQL
+- `application-test.yml`: conexiune la H2
+
+Pentru rularea normala a proiectului folosesc MySQL, ca datele sa ramana salvate intre porniri. Pentru teste folosesc H2, deoarece baza se creeaza rapid in memorie si se sterge automat dupa rularea testelor.
+
+In scripturile Docker am setat explicit:
+
+```text
+SPRING_PROFILES_ACTIVE=dev
+```
+
+Testele pornesc cu:
+
+```java
+@ActiveProfiles("test")
+```
+
+Astfel pot demonstra separat mediul de dezvoltare si mediul de testare, fara sa am nevoie de o baza MySQL pornita pentru teste.
+
+## Paginare si Sortare
+
+Am adaugat paginare si sortare pe endpoint-urile principale de listare. Endpoint-urile raman compatibile cu frontend-ul: daca nu trimit parametri, primesc lista simpla ca inainte; daca trimit `page`, `size` sau `sort`, primesc un raspuns paginat.
+
+Exemple:
+
+```text
+GET /api/v1/books?page=0&size=5&sort=title,asc
+GET /api/v1/admin/books?page=0&size=10&sort=price,desc
+GET /api/v1/admin/authors?page=0&size=10&sort=name,asc
+GET /api/v1/admin/categories?page=0&size=10&sort=name,asc
+GET /api/v1/admin/users?page=0&size=10&sort=username,asc
+GET /api/v1/admin/orders?page=0&size=10&sort=createdAt,desc
+```
+
+Raspunsul paginat contine campuri precum `content`, `totalElements`, `totalPages`, `number` si `size`, ceea ce permite afisarea datelor pe pagini si ordonarea lor dupa campurile dorite.
+
+## Logging
+
+Am configurat logging pentru fiecare microserviciu si pentru API Gateway. Logurile apar in consola la rularea aplicatiei si sunt salvate separat in fisiere:
+
+```text
+logs/auth-service.log
+logs/catalog-service.log
+logs/order-service.log
+logs/api-gateway.log
+```
+
+Nivelurile principale sunt:
+
+- `root`: `INFO`
+- `com.bookstore`: `INFO`
+- `org.springframework.web`: `WARN`
+- `org.hibernate.SQL`: `WARN` pentru serviciile care folosesc JPA
+
+Am adaugat loguri pentru actiuni importante din aplicatie:
+
+- inregistrare si autentificare utilizatori
+- creare, modificare si stergere carti
+- checkout comanda si modificare status comanda
+- rutarea request-urilor prin API Gateway
+- respingerea accesului fara token sau fara rol de admin
+
 ## Arhitectura
 
 Am impartit aplicatia in trei microservicii de business si un API Gateway:

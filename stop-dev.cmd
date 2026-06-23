@@ -1,16 +1,13 @@
 @echo off
 setlocal
 
-set "ROOT=%~dp0"
-set "BACKEND=%ROOT%backend"
-
 echo Stopping frontend...
-docker stop bookstore-frontend-dev >nul 2>nul
+for /f "tokens=5" %%p in ('netstat -ano ^| findstr ":5173 .*LISTENING"') do taskkill /PID %%p /F >nul 2>nul
 
-echo Stopping backend...
-docker stop bookstore-backend-dev >nul 2>nul
+echo Stopping microservices...
+docker stop bookstore-api-gateway bookstore-order-service bookstore-catalog-service bookstore-auth-service >nul 2>nul
 
 echo Stopping MySQL...
-docker compose -f "%BACKEND%\docker-compose.yml" stop mysql
+docker stop bookstore-mysql >nul 2>nul
 
 echo Done.

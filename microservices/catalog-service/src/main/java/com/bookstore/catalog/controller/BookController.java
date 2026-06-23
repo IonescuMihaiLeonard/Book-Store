@@ -4,7 +4,9 @@ import com.bookstore.catalog.dto.BookRequest;
 import com.bookstore.catalog.model.Book;
 import com.bookstore.catalog.service.BookService;
 import jakarta.validation.Valid;
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,7 +28,13 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public List<Book> getAllBooks() {
+    public Object getAllBooks(
+            @PageableDefault(size = 10, sort = "title") Pageable pageable,
+            @RequestParam MultiValueMap<String, String> params
+    ) {
+        if (hasPagingOrSorting(params)) {
+            return bookService.getAll(pageable);
+        }
         return bookService.getAll();
     }
 
@@ -35,7 +44,13 @@ public class BookController {
     }
 
     @GetMapping("/admin/books")
-    public List<Book> getAdminBooks() {
+    public Object getAdminBooks(
+            @PageableDefault(size = 10, sort = "id") Pageable pageable,
+            @RequestParam MultiValueMap<String, String> params
+    ) {
+        if (hasPagingOrSorting(params)) {
+            return bookService.getAll(pageable);
+        }
         return bookService.getAll();
     }
 
@@ -52,5 +67,9 @@ public class BookController {
     @DeleteMapping("/admin/books/{id}")
     public void deleteBook(@PathVariable Long id) {
         bookService.delete(id);
+    }
+
+    private boolean hasPagingOrSorting(MultiValueMap<String, String> params) {
+        return params.containsKey("page") || params.containsKey("size") || params.containsKey("sort");
     }
 }

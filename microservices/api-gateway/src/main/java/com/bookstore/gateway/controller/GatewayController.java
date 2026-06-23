@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Enumeration;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,8 @@ import tools.jackson.databind.ObjectMapper;
 
 @RestController
 public class GatewayController {
+
+    private static final Logger log = LoggerFactory.getLogger(GatewayController.class);
 
     private static final Set<String> SKIPPED_HEADERS = Set.of(
             "connection",
@@ -56,7 +60,9 @@ public class GatewayController {
     @RequestMapping("/api/v1/**")
     public ResponseEntity<byte[]> proxy(HttpServletRequest servletRequest, @RequestBody(required = false) byte[] body)
             throws IOException, InterruptedException {
+        long startedAt = System.currentTimeMillis();
         String path = servletRequest.getRequestURI();
+        String method = servletRequest.getMethod();
         String targetBaseUrl = resolveTargetBaseUrl(path);
         String queryString = servletRequest.getQueryString();
         if (isAdminPath(path)) {
@@ -66,6 +72,7 @@ public class GatewayController {
             queryString = appendQueryParam(queryString, "userId", resolveAuthenticatedUserId(servletRequest));
         }
         URI targetUri = buildTargetUri(targetBaseUrl, path, queryString);
+        log.info("Proxy request started method={} path={} target={}", method, path, targetBaseUrl);
 
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder(targetUri)
                 .timeout(Duration.ofSeconds(20));
@@ -84,6 +91,14 @@ public class GatewayController {
             }
         });
 
+        long durationMs = System.currentTimeMillis() - startedAt;
+        log.info(
+                "Proxy request completed method={} path={} status={} durationMs={}",
+                method,
+                path,
+                response.statusCode(),
+                durationMs
+        );
         return ResponseEntity.status(response.statusCode())
                 .headers(responseHeaders)
                 .body(response.body());
@@ -120,6 +135,7 @@ public class GatewayController {
         if (path.startsWith("/api/v1/books")) {
             return catalogServiceUrl;
         }
+        log.warn("No gateway route configured for path={}", path);
         throw new IllegalArgumentException("No route configured for " + path);
     }
 
@@ -148,14 +164,19 @@ public class GatewayController {
         JsonNode user = resolveAuthenticatedUser(servletRequest);
         JsonNode role = user.get("role");
         if (role == null || role.isNull() || !"ADMIN".equals(role.asText())) {
+            JsonNode id = user.get("id");
+            log.warn("Admin access denied for userId={} role={}", id == null ? "unknown" : id.asText(), role == null ? "unknown" : role.asText());
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin role required");
         }
+        JsonNode id = user.get("id");
+        log.info("Admin access granted for userId={}", id == null ? "unknown" : id.asText());
     }
 
     private JsonNode resolveAuthenticatedUser(HttpServletRequest servletRequest)
             throws IOException, InterruptedException {
         String authorization = servletRequest.getHeader("Authorization");
         if (authorization == null || authorization.isBlank()) {
+            log.warn("Authenticated request rejected because Authorization header is missing");
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Missing Authorization header");
         }
 
@@ -167,6 +188,7 @@ public class GatewayController {
 
         HttpResponse<byte[]> response = httpClient.send(request, HttpResponse.BodyHandlers.ofByteArray());
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            log.warn("Authenticated request rejected because auth-service returned status={}", response.statusCode());
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid Authorization token");
         }
 

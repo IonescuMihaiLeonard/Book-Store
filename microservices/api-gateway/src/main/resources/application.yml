@@ -2,10 +2,18 @@ server:
   port: ${SERVER_PORT:8085}
 
 spring:
+  profiles:
+    default: dev
   application:
     name: api-gateway
 
-services:
-  auth-url: ${AUTH_SERVICE_URL:http://localhost:8081}
-  catalog-url: ${CATALOG_SERVICE_URL:http://localhost:8082}
-  order-url: ${ORDER_SERVICE_URL:http://localhost:8083}
+logging:
+  file:
+    name: logs/${spring.application.name}.log
+  level:
+    root: INFO
+    com.bookstore: INFO
+    org.springframework.web: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"

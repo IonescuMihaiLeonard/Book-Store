@@ -11,6 +11,7 @@ docker run -d --name bookstore-api-gateway ^
   -v "%~dp0:/workspace" ^
   -v bookstore_maven_cache:/root/.m2 ^
   -w /workspace ^
+  -e SPRING_PROFILES_ACTIVE=dev ^
   -e AUTH_SERVICE_URL=http://bookstore-auth-service:8081 ^
   -e CATALOG_SERVICE_URL=http://bookstore-catalog-service:8082 ^
   -e ORDER_SERVICE_URL=http://bookstore-order-service:8083 ^

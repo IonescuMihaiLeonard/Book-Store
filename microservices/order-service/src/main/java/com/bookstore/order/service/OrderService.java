@@ -16,10 +16,16 @@ import com.bookstore.order.repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
+
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
@@ -43,16 +49,25 @@ public class OrderService {
 
     @Transactional
     public Order checkout(Long userId, Long addressId) {
+        log.info("Checkout started for userId={} addressId={}", userId, addressId);
         Cart cart = cartRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
+                .orElseThrow(() -> {
+                    log.warn("Checkout rejected because cart was not found for userId={}", userId);
+                    return new IllegalArgumentException("Cart not found");
+                });
 
         if (cart.getItems().isEmpty()) {
+            log.warn("Checkout rejected because cart is empty for userId={}", userId);
             throw new IllegalArgumentException("Cart is empty");
         }
 
         Address address = addressRepository.findById(addressId)
-                .orElseThrow(() -> new IllegalArgumentException("Address not found"));
+                .orElseThrow(() -> {
+                    log.warn("Checkout rejected because addressId={} was not found", addressId);
+                    return new IllegalArgumentException("Address not found");
+                });
         if (!address.getUserId().equals(userId)) {
+            log.warn("Checkout rejected because addressId={} does not belong to userId={}", addressId, userId);
             throw new IllegalArgumentException("Unauthorized address access");
         }
 
@@ -86,6 +101,13 @@ public class OrderService {
         cart.getItems().clear();
         cartRepository.save(cart);
 
+        log.info(
+                "Checkout completed for userId={} orderId={} total={} items={}",
+                userId,
+                order.getId(),
+                total,
+                order.getItems().size()
+        );
         return order;
     }
 
@@ -97,10 +119,23 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public Page<Order> getAllOrders(Pageable pageable) {
+        log.info(
+                "Loading admin orders page number={} size={} sort={}",
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                pageable.getSort()
+        );
+        return orderRepository.findAll(pageable);
+    }
+
     public Order updateStatus(Long orderId, OrderStatus status) {
+        log.info("Update order status request for orderId={} status={}", orderId, status);
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found"));
         order.setStatus(status);
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+        log.info("Order status updated for orderId={} status={}", savedOrder.getId(), savedOrder.getStatus());
+        return savedOrder;
     }
 }

@@ -9,6 +9,7 @@ docker run -d --name bookstore-order-service ^
   -v "%~dp0:/workspace" ^
   -v bookstore_maven_cache:/root/.m2 ^
   -w /workspace ^
+  -e SPRING_PROFILES_ACTIVE=dev ^
   -e DB_HOST=host.docker.internal ^
   -e DB_PORT=13306 ^
   -e DB_NAME=order_service ^

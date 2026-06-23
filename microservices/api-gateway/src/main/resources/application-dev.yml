@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+services:
+  auth-url: ${AUTH_SERVICE_URL:http://localhost:8081}
+  catalog-url: ${CATALOG_SERVICE_URL:http://localhost:8082}
+  order-url: ${ORDER_SERVICE_URL:http://localhost:8083}
